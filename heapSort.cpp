@@ -13,9 +13,6 @@ Assignment: Week 4 - Heap Sort
 */
 
 
-
-
-
 int parentNode(int index) {
     /*
     Returns the index of the parent node of the node at the given index.
@@ -50,6 +47,16 @@ int rightChildNode(int index) {
 }
 
 void maxHeapify(vector<int> &heapArray, int index, int heapSize) {
+    /*
+    Maintains the max heap property for the subtree rooted at the given index.
+    Parameters:
+       - heapArray <vector<int>>: The vector representing the heap.
+       - index <int>: The index of the root of the subtree to be heapified.
+       - heapSize <int>: The number of elements in the heap.
+    Returns:
+        - None
+            - The vector is modified in place to maintain the max heap property.
+    */
     int largestIndex = index;
     if( (leftChildNode(index) < heapSize) && (heapArray[leftChildNode(index)] > heapArray[largestIndex]) ) {
         largestIndex = leftChildNode(index);
@@ -58,7 +65,10 @@ void maxHeapify(vector<int> &heapArray, int index, int heapSize) {
         largestIndex = rightChildNode(index);
     }
     if (largestIndex != index){
-        swap(heapArray[index], heapArray[largestIndex]);
+        // swap(heapArray[index], heapArray[largestIndex]);
+        int tempIndex = heapArray[index];
+        heapArray[index] = heapArray[largestIndex];
+        heapArray[largestIndex] = tempIndex;
         maxHeapify(heapArray, largestIndex, heapSize);
     } 
 }
@@ -91,7 +101,10 @@ void heapSort(vector<int> &heapArray) {
 
     int heapSize = heapArray.size();
     for (int i = heapSize - 1; i > 0; i--) {
-        swap(heapArray[0], heapArray[i]);
+        // swap(heapArray[0], heapArray[i]);
+        int tempIndex = heapArray[0];
+        heapArray[0] = heapArray[i];
+        heapArray[i] = tempIndex;
         heapSize--;
         maxHeapify(heapArray, 0, heapSize);
     }
@@ -108,9 +121,8 @@ void printHeap(vector<int> &heapArray) {
             - No need to return anything as the function prints directly to standard output.
     */
     for (int i = 0; i < heapArray.size(); i++){
-        cout << heapArray[i] << " ";
+        cout << heapArray[i] << endl;
     }
-    cout << endl;
     return;
 }
 
